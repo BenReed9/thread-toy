@@ -1,4 +1,4 @@
-package com.reed.thread.synchronized9;
+package com.reed.thread;
 
 import lombok.extern.slf4j.Slf4j;
 

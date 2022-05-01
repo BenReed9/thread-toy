@@ -1,9 +1,9 @@
-package com.reed.thread.volatile9;
+package com.reed.thread;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class VolatileTest {
+public class Volatile9 {
     int a = 1;
     int b = 2;
 
@@ -18,7 +18,7 @@ public class VolatileTest {
 
     public static void main(String[] args) {
         while (true){
-            final VolatileTest test = new VolatileTest();
+            final Volatile9 test = new Volatile9();
             new Thread(() -> {
                 try {
                     Thread.sleep(10);

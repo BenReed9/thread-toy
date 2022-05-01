@@ -1,56 +1,60 @@
-package com.reed.thread.lock9;
+package com.reed.thread;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 使用lock
+ *
+ * @Author: reed
+ */
 @Slf4j
 public class Lock9 {
 
     // 静态变量在类初始化的时候放到了方法区里面, 所以是同一个对象
-    private static Lock staticLock = new ReentrantLock();
+    private static final Lock STATIC_LOCK = new ReentrantLock();
 
     // 成员变量在类初始化的时候加载, 不是同一个对象
-    private Lock lock = new ReentrantLock();
+    private final Lock LOCK = new ReentrantLock();
 
     private void testLock() {
-        if (staticLock.tryLock()) {
+        if (STATIC_LOCK.tryLock()) {
             try {
                 log.info(Thread.currentThread().getName() + " testLock");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             } finally {
-                staticLock.unlock();
+                STATIC_LOCK.unlock();
             }
         }
     }
 
     private void testStaticLockWait() {
         try {
-            if (lock.tryLock(3, TimeUnit.SECONDS)) {
+            if (LOCK.tryLock(3, TimeUnit.SECONDS)) {
                 log.info(Thread.currentThread().getName() + " testLock");
                 Thread.sleep(2000);
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
     }
 
     private void testLockWait() {
         try {
-            if (staticLock.tryLock(3, TimeUnit.SECONDS)) {
+            if (STATIC_LOCK.tryLock(3, TimeUnit.SECONDS)) {
                 log.info(Thread.currentThread().getName() + " testLock");
                 Thread.sleep(2000);
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
-            staticLock.unlock();
+            STATIC_LOCK.unlock();
         }
     }
 
@@ -69,7 +73,6 @@ public class Lock9 {
 //                .start();
 //        new Thread(() -> new Lock9().testStaticLockWait())
 //                .start();
-
     }
 
 }
